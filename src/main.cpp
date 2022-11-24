@@ -27,6 +27,10 @@ static std::optional<std::vector<std::byte>> ReadFile(const std::string &path)
     return std::move(contents);
 }
 
+bool validRange(int x) {
+    return x >= 0 && x <= 100;
+}
+
 int main(int argc, const char **argv)
 {    
     std::string osm_data_file = "";
@@ -51,20 +55,29 @@ int main(int argc, const char **argv)
         else
             osm_data = std::move(*data);
     }
-    //Complete this TODO to satisfy Project Rubric Criterias of User Input
 
-    // TODO 1: Declare floats `start_x`, `start_y`, `end_x`, and `end_y` and get
-    // user input for these values using std::cin. Pass the user input to the
-    // RoutePlanner object below in place of 10, 10, 90, 90.
-    float start_x;
-    float start_y;
-    float end_x;
-    float end_y;
+    // Get user input for the start position and the end position
+    float start_x = -1;
+    float start_y = -1;
+    float end_x = -1;
+    float end_y = -1;
     
-    std::cin >> start_x;
-  	std::cin >> start_y;
- 	std::cin >> end_x;
-  	std::cin >> end_y;
+    while (!validRange(start_x)) {
+        std::cout << "Enter valid start x-coordinate: ";
+        std::cin >> start_x;
+    }
+    while (!validRange(start_y)) {
+        std::cout << "Enter valid start y-coordinate: ";
+        std::cin >> start_y;
+    }
+    while (!validRange(end_x)) {
+        std::cout << "Enter valid end x-coordinate: ";
+        std::cin >> end_x;
+    }
+    while (!validRange(end_y)) {
+        std::cout << "Enter valid end y-coordinate: ";
+        std::cin >> end_y;
+    }
   
     // Build Model.
     RouteModel model{osm_data};
